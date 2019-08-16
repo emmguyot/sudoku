@@ -29,27 +29,94 @@ function checkGrid(grid, position, number) {
     return squareOk && vlineOk && hlineOk;
 }
 
+function holesCompare(hole1, hole2) {
+    return (hole1.possibilities.length - hole2.possibilities.length);
+}
+
 function solver(grid) {
 
-    const workGrid = grid.clone();
+    const workGrid = JSON.parse(JSON.stringify(grid));
+    let gridModified = false;
     const holes = [];
 
-    // Step 0 : Nothing to do ? Exit (for recyursion)
-
     // Step 1 : search each hole
+    for (let x = 0; x < GRID_SIZE; x++) {
+        for (let y = 0; y < GRID_SIZE; y++) {
+            if (grid[y][x] === null) {
+                holes.push({x, y, possibilities: []});
+            }
+        }
+    }
+
+    // Step 1bis : Nothing to do ? Exit (for recursion)
+    if (holes.length == 0) {
+        return grid;
+    }
+
+    // NB : From that point, work only with workGrid
 
     // Step 2 : for each hole, enumerate possibilities
+    for (let i = 0; i < holes.length; i++) {
+        for (let number = 1; number <= 9; number++) {
+            if (checkGrid(workGrid, holes[i], number)) {
+                holes[i].possibilities.push(number);
+            }
+        }
+        // If one hole has no possitibility > The grid is a failure
+        if (holes[i].possibilities.length === 0) {
+            return null;
+        }
+    }
 
     // Step 3 : Fill hole with only 1 possibility
+    for (let i = 0; i < holes.length; i++) {
+        if (holes[i].possibilities.length === 1) {
+            if (checkGrid(workGrid, holes[i], holes[i].possibilities[0])) {
+                workGrid[holes[i].y][holes[i].x] = holes[i].possibilities[0];
+                gridModified = true;
+            }
+            else {
+                // 2 obvious possibility exlude themselves
+                return null;
+            }
+        }
+    }
 
     // Step 4 : Repeat until no more obvious hole
+    if (gridModified) {
+        return solver(workGrid);
+    }
+
+    // Order holes on possibilities length
+    holes.sort(holesCompare);
 
     // Try one possibility and recurse
+    for (let i = 0; i < holes.length; i++) {
+        const tryGrid = JSON.parse(JSON.stringify(workGrid));
 
-    // If no success remove the possibility and loop
+        for (let possibility = 0; possibility < holes[i].possibilities.length; possibility++) {
+            if (checkGrid(tryGrid, holes[i], holes[i].possibilities[possibility])) {
+                tryGrid[holes[i].y][holes[i].x] = holes[i].possibilities[possibility];
+                
+                let finalGrid = solver(tryGrid);
+                if (finalGrid != null) {
+                    // It's over
+                    return finalGrid;
+                }
+                else {
+                    tryGrid[holes[i].y][holes[i].x] = null;
+                }
+                // Try next possibility
+            }
+        }
 
-    return workGrid;
+        // no possibility fits for this hole !!
+        return null;
+    }
+
+    // Should never be there
+    throw new Exception(`Should never end function here for grid ${JSON.stringify(workGrid)}`);
 }
 
 exports.checkGrid = checkGrid;
-exports.solver = solver;
+exports.solver = solver;    

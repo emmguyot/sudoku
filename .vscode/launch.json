@@ -10,11 +10,17 @@
             "name": "Launch Program",
             "program": "${workspaceFolder}\\index.js"
         },
-        {
+      _  {
             "type": "node",
             "request": "launch",
-            "name": "Launch Test",
+            "name": "Launch Test CheckGrid",
             "program": "${workspaceFolder}\\tests\\testCheckGrid.js"
+        },
+        _  {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Test Solver",
+            "program": "${workspaceFolder}\\tests\\testSolver.js"
         }
     ]
 }
