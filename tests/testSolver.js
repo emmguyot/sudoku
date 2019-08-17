@@ -70,7 +70,7 @@ gridRes1 = solver.solver(solver.stringToGrid(chaineTest1));
 phrase = `The final grid for ${chaineTest1} is ${JSON.stringify(gridRes1)}`;
 console.assert(JSON.stringify(gridOk1) === JSON.stringify(gridRes1), phrase);
 
-// Check an exper grid (extracted from Microsoft Sudoku)
+// Check an expert grid (extracted from Microsoft Sudoku)
 let chaineTest2 =     "039200000"
                     + "010000950"
                     + "200600001"
@@ -95,8 +95,58 @@ gridRes2 = solver.solver(solver.stringToGrid(chaineTest2));
 phrase = `The final grid for ${chaineTest2} is ${JSON.stringify(gridRes2)}`;
 console.assert(JSON.stringify(gridOk2) === JSON.stringify(gridRes2), phrase);
 
+// Check an difficult grid
+// extracted from François Laburthe, Guillaume Rochart, Narendra Jussien, "Evaluer la difficulté d'une grillede sudoku à l'aide d'un modèle contraintes", 2006
+let chaineTest3 =     "580004200"
+                    + "020608000"
+                    + "000070000"
+                    + "900040000"
+                    + "000007386"
+                    + "000000004"
+                    + "000800005"
+                    + "036000009"
+                    + "005090072";
+let gridOk3 = [
+    [5, 8, 9,   1, 3, 4,    2, 6, 7], 
+    [1, 2, 7,   6, 5, 8,    9, 4, 3], 
+    [6, 4, 3,   2, 7, 9,    1, 5, 8], 
+    [9, 7, 8,   3, 4, 6,    5, 2, 1], 
+    [2, 5, 4,   9, 1, 7,    3, 8, 6], 
+    [3, 6, 1,   5, 8, 2,    7, 9, 4], 
+    [7, 9, 2,   8, 6, 1,    4, 3, 5], 
+    [4, 3, 6,   7, 2, 5,    8, 1, 9], 
+    [8, 1, 5,   4, 9, 3,    6, 7, 2]
+];
+let gridRes3 = solver.solver(solver.stringToGrid(chaineTest3));
+phrase = `The final grid for ${chaineTest3} is ${JSON.stringify(gridRes3)}`;
+console.assert(JSON.stringify(gridOk3) === JSON.stringify(gridRes3), phrase);
+
+// Check an very difficult grid
+// extracted from www.assistant-sudoku.com
+let chaineTest4 =     "000000070"
+                    + "060010004"
+                    + "003400200"
+                    + "800043050"
+                    + "002950748"
+                    + "040080009"
+                    + "020060007"
+                    + "000100900"
+                    + "700008060";
+let gridOk4 = [
+    [9, 5, 4,   8, 2, 6,    1, 7, 3], 
+    [2, 6, 8,   3, 1, 7,    5, 9, 4], 
+    [1, 7, 3,   4, 9, 5,    2, 8, 6], 
+    [8, 1, 9,   7, 4, 3,    6, 5, 2], 
+    [6, 3, 2,   9, 5, 1,    7, 4, 8], 
+    [5, 4, 7,   6, 8, 2,    3, 1, 9], 
+    [4, 2, 1,   5, 6, 9,    8, 3, 7], 
+    [3, 8, 6,   1, 7, 4,    9, 2, 5], 
+    [7, 9, 5,   2, 3, 8,    4, 6, 1]
+];
+let gridRes4 = solver.solver(solver.stringToGrid(chaineTest4));
+phrase = `The final grid for ${chaineTest4} is ${JSON.stringify(gridRes4)}`;
+console.assert(JSON.stringify(gridOk4) === JSON.stringify(gridRes4), phrase);
 
 // Time to compute
 const duration = new Date() - startTime;
 console.log("Duration (ms) : " + duration);
-
