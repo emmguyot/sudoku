@@ -118,5 +118,49 @@ function solver(grid) {
     throw new Exception(`Should never end function here for grid ${JSON.stringify(workGrid)}`);
 }
 
+function giveMeOneHint(grid) {
+    const finalGrid = solver(grid);
+    const holes = [];
+
+    // Step 1 : search each hole
+    for (let x = 0; x < GRID_SIZE; x++) {
+        for (let y = 0; y < GRID_SIZE; y++) {
+            if (grid[y][x] === null) {
+                holes.push({x, y});
+            }
+        }
+    }
+    
+    // Select a hole that will be given as an hint
+    const hintHole = Math.trunc(Math.random() * holes.length);
+
+    return {x: holes[hintHole].x, y: holes[hintHole].y, number: finalGrid[holes[hintHole].y][holes[hintHole].x]};
+}
+
+// Permet de créer plus facilement une grille de Sudoku à partir d'une chaine contenant tous les chiffres à la suite (et un autre caractère que 1-9 pour les trous)
+function stringToGrid(chaine) {
+    const grid = [];
+    let pos = 0;
+
+    if (chaine.length != GRID_SIZE*GRID_SIZE) {
+        return null;
+    }
+
+    for (let x = 0; x < GRID_SIZE; x++) {
+        let line = [];
+        for (let y = 0; y < GRID_SIZE; y++) {
+            const num = parseInt(chaine.charAt(pos++));
+            if (num > 0) line.push(num);
+            else line.push(null);
+        }
+        grid.push(line);
+    }
+
+    return grid;
+}
+
 exports.checkGrid = checkGrid;
 exports.solver = solver;    
+exports.giveMeOneHint = giveMeOneHint;    
+exports.stringToGrid = stringToGrid;    
+

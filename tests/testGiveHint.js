@@ -25,9 +25,12 @@ let gridOk1 = [
     [7, 5, 6,       8, 4, 3,     9, 1, 2],
     [1, 2, 3,       6, 9, 7,     8, 5, 4],
 ];
-let gridRes1 = solver.solver(gridTest1);
-let phrase = `The final grid for ${JSON.stringify(gridTest1)} is ${JSON.stringify(gridRes1)}`;
-console.assert(JSON.stringify(gridOk1) === JSON.stringify(gridRes1), phrase);
+let hintGrid1 = solver.giveMeOneHint(gridTest1);
+let phrase = `The hint ${JSON.stringify(hintGrid1)} isn't a hole of grid ${JSON.stringify(gridTest1)}`;
+console.assert(gridTest1[hintGrid1.y][hintGrid1.x] === null, phrase);
+
+phrase = `The hint ${JSON.stringify(hintGrid1)} isn't the right number for grid ${JSON.stringify(gridTest1)}`;
+console.assert(gridOk1[hintGrid1.y][hintGrid1.x] === hintGrid1.number, phrase);
 
 // Check an exper grid (extracted from Microsoft Sudoku)
 let gridTest2 = [
@@ -52,51 +55,13 @@ let gridOk2 = [
     [9, 5, 7,       8, 3, 4,        1, 2, 6],
     [4, 6, 3,       9, 2, 1,        7, 8, 5]
 ];
-let gridRes2 = solver.solver(gridTest2);
-phrase = `The final grid for ${JSON.stringify(gridTest2)} is ${JSON.stringify(gridRes2)}`;
-console.assert(JSON.stringify(gridOk2) === JSON.stringify(gridRes2), phrase);
+let hintGrid2 = solver.giveMeOneHint(gridTest2);
+phrase = `The hint ${JSON.stringify(hintGrid2)} isn't a hole of grid ${JSON.stringify(gridTest2)}`;
+console.assert(gridTest2[hintGrid2.y][hintGrid2.x] === null, phrase);
 
-// Check a basic grid (extracted from Page 44 of ...)
-let chaineTest1 = "600070300" 
-                + "000300120"
-                + "800000005"
-                + "090704200"
-                + "200000001"
-                + "007102080"
-                + "400000007"
-                + "056003000"
-                + "003090004";
-gridRes1 = solver.solver(solver.stringToGrid(chaineTest1));
-phrase = `The final grid for ${chaineTest1} is ${JSON.stringify(gridRes1)}`;
-console.assert(JSON.stringify(gridOk1) === JSON.stringify(gridRes1), phrase);
-
-// Check an exper grid (extracted from Microsoft Sudoku)
-let chaineTest2 =     "039200000"
-                    + "010000950"
-                    + "200600001"
-                    + "600300004"
-                    + "002090503"
-                    + "000002000"
-                    + "100067009"
-                    + "057004020"
-                    + "003901780";
-gridOk2 = [
-    [5, 3, 9,       2, 1, 8,        4, 6, 7],
-    [8, 1, 6,       7, 4, 3,        9, 5, 2],
-    [2, 7, 4,       6, 5, 9,        8, 3, 1],
-    [6, 9, 1,       3, 8, 5,        2, 7, 4],
-    [7, 8, 2,       4, 9, 6,        5, 1, 3],
-    [3, 4, 5,       1, 7, 2,        6, 9, 8],
-    [1, 2, 8,       5, 6, 7,        3, 4, 9],
-    [9, 5, 7,       8, 3, 4,        1, 2, 6],
-    [4, 6, 3,       9, 2, 1,        7, 8, 5]
-];
-gridRes2 = solver.solver(solver.stringToGrid(chaineTest2));
-phrase = `The final grid for ${chaineTest2} is ${JSON.stringify(gridRes2)}`;
-console.assert(JSON.stringify(gridOk2) === JSON.stringify(gridRes2), phrase);
-
+phrase = `The hint ${JSON.stringify(hintGrid2)} isn't the right number for grid ${JSON.stringify(gridTest2)}`;
+console.assert(gridOk2[hintGrid2.y][hintGrid2.x] === hintGrid2.number, phrase);
 
 // Time to compute
 const duration = new Date() - startTime;
 console.log("Duration (ms) : " + duration);
-
