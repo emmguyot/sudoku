@@ -115,7 +115,7 @@ function solver(grid) {
     }
 
     // Should never be there
-    throw new Exception(`Should never end function here for grid ${JSON.stringify(workGrid)}`);
+    throw `Should never end function here for grid ${JSON.stringify(workGrid)}`;
 }
 
 function giveMeOneHint(grid) {
@@ -159,8 +159,44 @@ function stringToGrid(chaine) {
     return grid;
 }
 
+function generateGrid(numToFill) {
+    const grid = [];
+    let pos = 0;
+
+    // Empty Grid
+    for (let x = 0; x < GRID_SIZE; x++) {
+        let line = [];
+        for (let y = 0; y < GRID_SIZE; y++) {
+            line.push(null);
+        }
+        grid.push(line);
+    }
+
+    let numbers = 0;
+    while (numbers < numToFill) {
+        const x = Math.floor(Math.random() * GRID_SIZE);
+        const y = Math.floor(Math.random() * GRID_SIZE);
+        const number = 1 + Math.floor(Math.random() * GRID_SIZE);
+
+        if ((grid[y][x] !== null) && (checkGrid(grid, {x, y}, number))) {
+            grid[y][x] = number;
+            numbers++
+        }
+    }
+
+    // Vérification
+    if (solver(grid)) {
+        return grid;
+    }
+    else {
+        throw 'Grid is broken';
+    }
+}
+
 exports.checkGrid = checkGrid;
 exports.solver = solver;    
 exports.giveMeOneHint = giveMeOneHint;    
 exports.stringToGrid = stringToGrid;    
+exports.generateGrid = generateGrid;
+exports.GRID_SIZE = GRID_SIZE;    
 

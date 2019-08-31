@@ -25,8 +25,14 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Launch Test Give Hinet",
+            "name": "Launch Test Give Hint",
             "program": "${workspaceFolder}\\tests\\testGiveHint.js"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Test Generate Grid",
+            "program": "${workspaceFolder}\\tests\\testGenerateGrid.js"
         }
 
     ]
