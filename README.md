@@ -3,10 +3,12 @@ Sudoku games solver and generator
 
 This package includes javascript scripts to manage Sudoku grids : Solve them, generate one, ...
 
-Tests avec Jasmine
+Tests with Jasmine
 ==============
-Pas au point...
+Doesn't work...
     npm test
 
-Lancement manuel : node -r esm tests/testxxxx.mjs
+Manual launch : 
+1. node -r esm tests/testxxxx.mjs
+1. use VS Code debug
 
