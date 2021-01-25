@@ -1,21 +1,43 @@
-const startTime = new Date();
+let startTime = new Date();
 
-const solver = require('../index.js');
+import { Sudoku } from '../index.mjs';
 
-// Sanity check
-let nbToFill = 17;
-let gridTest1 = solver.generateGrid(nbToFill);
-let compteur = 0;
-for (let x = 0; x < solver.GRID_SIZE; x++) {
-    for (let y = 0; y < solver.GRID_SIZE; y++) {
-        if (gridTest1[y][x] !== null) {
-            compteur++;
+let solver = new Sudoku(9);
+
+function testGenerateWith(nbToFill) {
+
+    startTime = new Date();
+    console.log("Generate for : " + nbToFill);
+
+    let gridTest1 = solver.generateGrid(nbToFill);
+    let count = 0;
+    for (let x = 0; x < solver.GRID_SIZE; x++) {
+        for (let y = 0; y < solver.GRID_SIZE; y++) {
+            if (gridTest1[y][x] !== null) {
+                count++;
+            }
         }
     }
+    let duration = new Date() - startTime;
+    console.log("Duration to generate (ms) : " + duration);
+    console.assert(count === nbToFill, `Wrong number of item in the grid : ${count} vs ${nbToFill}`);
+    console.assert(solver.solver(gridTest1) !== null, `Generated grid is broken : ${JSON.stringify(gridTest1)}`);
+    //console.log(`Grid : ${JSON.stringify(gridTest1)}`);
+    // Time to compute
+    duration = new Date() - startTime;
+    console.log("Duration (ms) : " + duration);
 }
-console.assert (compteur === nbToFill, `Nombre d'éléments placés incorrect : ${compteur} contre ${nbToFill}`);
-console.assert (solver.resolve(gridTest1) !== null, `Grille générée incorrecte : ${JSON.stringify(gridTest1)}`);
 
-// Time to compute
-const duration = new Date() - startTime;
-console.log("Duration (ms) : " + duration);
+while (true) {
+    // Nightmare level 16
+    testGenerateWith(16);
+
+    // Hard level 19-23 - Easy to generate
+    testGenerateWith(20);
+
+    // Medium leve 24-39
+    testGenerateWith(25);
+
+    // Easy level 30-37
+    testGenerateWith(30);
+}

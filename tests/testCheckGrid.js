@@ -1,6 +1,8 @@
 const startTime = new Date();
 
-const solver = require('../index.js');
+import { Sudoku } from '../index.mjs';
+
+let solver = new Sudoku(9);
 
 // Sanity check
 let gridTest1 = [

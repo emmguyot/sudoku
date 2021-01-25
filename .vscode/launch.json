@@ -4,35 +4,47 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+
         {
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "${workspaceFolder}\\index.js"
+            "program": "${workspaceFolder}/index.jsm"
         },
       _ {
             "type": "node",
             "request": "launch",
             "name": "Launch Test CheckGrid",
-            "program": "${workspaceFolder}\\tests\\testCheckGrid.js"
+            "program": "${workspaceFolder}/tests/testCheckGrid.js",
+            "runtimeArgs": ["-r","esm"]
         },
         {
             "type": "node",
             "request": "launch",
             "name": "Launch Test Solver",
-            "program": "${workspaceFolder}\\tests\\testSolver.js"
+            "program": "${workspaceFolder}/tests/testSolver.js",
+            "runtimeArgs": ["-r","esm"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Test Solverx16",
+            "runtimeArgs": ["-r","esm"],
+            "program": "${workspaceFolder}/tests/testSolver16.js"
         },
         {
             "type": "node",
             "request": "launch",
             "name": "Launch Test Give Hint",
-            "program": "${workspaceFolder}\\tests\\testGiveHint.js"
+            "runtimeArgs": ["-r","esm"],
+            "program": "${workspaceFolder}/tests/testGiveHint.js"
         },
         {
             "type": "node",
             "request": "launch",
             "name": "Launch Test Generate Grid",
-            "program": "${workspaceFolder}\\tests\\testGenerateGrid.js"
+            "runtimeArgs": ["-r","esm"],
+            "program": "${workspaceFolder}/tests/testGenerateGrid.js"
         }
 
     ]
