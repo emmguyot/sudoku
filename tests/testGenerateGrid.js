@@ -28,7 +28,7 @@ function testGenerateWith(nbToFill) {
     console.log("Duration (ms) : " + duration);
 }
 
-while (true) {
+for (let i = 0; i < 10; i++) {
     // Nightmare level 16
     testGenerateWith(16);
 
@@ -39,5 +39,6 @@ while (true) {
     testGenerateWith(25);
 
     // Easy level 30-37
+    console.log(`Step : ${i}`);
     testGenerateWith(30);
 }

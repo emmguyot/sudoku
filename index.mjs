@@ -12,30 +12,30 @@ class Sudoku {
 
     checkGrid(grid, position, number) {
 
+        // Check empty
+        if (grid[position.y][position.x] != null) return false;
+
         // Check hline
-        let hlineOk = true;
         for (let i = 0; i < this.GRID_SIZE; i++) {
-            hlineOk = hlineOk && (grid[position.y][i] !== number);
+            if (grid[position.y][i] === number) return false;
         }
     
         // Check vline
-        let vlineOk = true; 
         for (let i = 0; i < this.GRID_SIZE; i++) {
-            vlineOk = vlineOk && (grid[i][position.x] !== number);
+            if (grid[i][position.x] === number) return false;
         }
     
         // Check Square
-        let squareOk = true;
         const squareXStart = Math.trunc(position.x / this.INNER_SQUARE_SIZE) * this.INNER_SQUARE_SIZE;
         const squareYStart = Math.trunc(position.y / this.INNER_SQUARE_SIZE) * this.INNER_SQUARE_SIZE;
     
         for (let x = 0; x < this.INNER_SQUARE_SIZE; x++) {
             for (let y = 0; y < this.INNER_SQUARE_SIZE; y++) {
-                squareOk = squareOk && (grid[squareYStart+y][squareXStart+x] !== number);
+                if (grid[squareYStart+y][squareXStart+x] === number) return false;
             }
         }
     
-        return squareOk && vlineOk && hlineOk;
+        return true;
     }
     
     holesCompare(hole1, hole2) {
